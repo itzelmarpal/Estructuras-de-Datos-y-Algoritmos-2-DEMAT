@@ -78,8 +78,7 @@ int main() {
             brackets[i] = -1;
     }
 
-    t.resize(4 * n); 
-    
+    t.resize(4 * n);
     build(brackets, 1, 0, n - 1);
 
     int queries_count;
