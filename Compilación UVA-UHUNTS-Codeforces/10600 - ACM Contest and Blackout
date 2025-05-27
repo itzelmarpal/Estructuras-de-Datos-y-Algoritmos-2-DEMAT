@@ -103,6 +103,5 @@ int main() {
         vector<int> answer = kruskal_first_secondMST(n, edges);
         cout << answer[0] << " " << answer[1] << endl;
     }
-
     return 0;
 }
