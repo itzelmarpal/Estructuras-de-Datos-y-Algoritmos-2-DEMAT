@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <tuple>  // Incluir para std::tuple
+#include <tuple>
 #include <vector>
 #include <algorithm>
 
