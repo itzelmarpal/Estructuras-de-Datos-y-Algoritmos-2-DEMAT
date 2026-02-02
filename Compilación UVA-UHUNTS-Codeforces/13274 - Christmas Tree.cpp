@@ -8,6 +8,7 @@ vector<int> tree[MAXN];
 
 /*
     13274 - Christmas Tree
+    Itzel Berenice Martinez Palacios
 */
 
 int maxNodes_KTree(int parent, int actual, int k){

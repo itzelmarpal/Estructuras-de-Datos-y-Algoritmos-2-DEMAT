@@ -4,7 +4,42 @@
 #include <algorithm>
 using namespace std;
 
-// Disjoint set data struture
+/*
+    10600 - ACM Contest and Blackout
+    Itzel Berenice Martinez Palacios
+
+    Iniciamos el programa leyendo la cantidad de casos de prueba. Para cada
+    caso, leemos el numero de nodos "n" y de aristas "m", y luego leemos
+    cada arista con su origen, destino y costo, guardandolas en un vector
+    de vectores llamado "edges". Restamos 1 al origen y destino para
+    indexarlos en 0.
+
+    Despues, llamamos a la funcion "kruskal_first_secondMST" que se encuentra
+    el arbol de expansión mínima (MST) como el segundo mejor MST.
+
+    En esta funcion, lo que hacemos es primero ordenar todas las aristas
+    de menor a mayor costo. Luego, aplicamos el algoritmo de Kruskal para
+    encontrar el primer MST. Para esto, usamos un DSU que nos ayuda a detectar
+    y evitar ciclos. Vamos agregando las aristas de menor costo que no formen
+    un ciclo y sumamos su costo en la variable "cost_mst". Tambien guardamos
+    cuales aristas forman parte de este primer MST en el vector "mstEdgesIndices".
+
+    Ya que tenemos el primer MST y su costo, buscamos el segundo MST.
+    Para ello, recorremos cada una de las aristas que formaron el primer
+    MST (las que estan en "mstEdgesIndices"). En cada vuelra, quitamos
+    temporalmente una de estas aristas y volvemos a calcular un MST con
+    el resto de las aristas disponibles. Hacemos esto para cada arista del
+    primer MST, obteniendo asi varios posibles arboles de expansion.
+
+    De todos los costos de los arboles que generamos anteriormente,
+    nos quedamos con el mas pequenio de ellos. Este sera el costo del
+    segundo mejor MST.
+
+    Finalmente, la funcion devuelve un vector con los dos costos. Así que
+    solamente imprimimos estos dos valores separados por unespacio y
+    continuamos con el siguiente caso de prueba si lo hay.
+*/
+
 class DSU {
     vector<int> parent, rank;
 
@@ -39,13 +74,11 @@ bool comparator(vector<int> &a,vector<int> &b){
 
 vector<int> kruskal_first_secondMST(int V, vector<vector<int>> &edges) {
     vector <int> ans;
-    // Sort all edges
     sort(edges.begin(), edges.end(),comparator);
 
-    // Traverse edges in sorted order for MST
     DSU dsu_mst(V);
     int cost_mst = 0, count_mst = 0;
-    vector<int> mstEdgesIndices; // Store indices of edges in MST
+    vector<int> mstEdgesIndices;
 
     for (int i = 0; i < edges.size(); i++) {
         int x = edges[i][0], y = edges[i][1], w = edges[i][2];
@@ -62,13 +95,12 @@ vector<int> kruskal_first_secondMST(int V, vector<vector<int>> &edges) {
 
     int res = INT_MAX;
 
-    // Try removing each edge of the MST and find the new MST cost
     for(int removed_edge_index : mstEdgesIndices) {
         DSU dsu_second(V);
         int cost_second = 0, count_second = 0;
 
         for (int j = 0; j < edges.size(); j++) {
-            if (j == removed_edge_index) continue; // Skip the removed edge
+            if (j == removed_edge_index) continue; 
 
             int x = edges[j][0], y = edges[j][1], w = edges[j][2];
 
